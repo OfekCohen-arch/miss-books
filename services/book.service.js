@@ -8,8 +8,7 @@ export const bookService = {
     query,
     get,
     remove,
-    save,
-    getEmptyBook
+    save
 }
 
 function query() {
@@ -31,22 +30,30 @@ function save(book) {
         return storageService.post(BOOK_KEY, book)
     }
 }
-function getEmptyBook(title = '',description='',thumbnail='', amount = 0,currencyCode = "EUR", isOnSale = false){
-    const listPrice = {amount: amount, currencyCode: currencyCode,isOnSale : isOnSale}
-    return { id: '', title,description,thumbnail, listPrice }
-}
 function _createBooks() {
-    let books = utilService.loadFromStorage(BOOK_KEY)
-    if (!books || !books.length) {
-        books = []
-        books.push(_createBook('Harry Poter',utilService.makeLorem(7),`http://coding-academy.org/books-photos/1.jpg`,80,'EUR',true))
-        books.push(_createBook('Spiderman',utilService.makeLorem(7),`http://coding-academy.org/books-photos/2.jpg`,200,'EUR',true))
-        books.push(_createBook('Hulk',utilService.makeLorem(7),`http://coding-academy.org/books-photos/3.jpg`,90,'EUR',true))
-        utilService.saveToStorage(BOOK_KEY, books)
-    }
+const ctgs = ['Love', 'Fiction', 'Poetry', 'Computers', 'Religion']
+const books = []
+for (let i = 0; i < 20; i++) {
+const book = {
+id: utilService.makeId(),
+title: utilService.makeLorem(2),
+subtitle: utilService.makeLorem(4),
+authors: [
+utilService.makeLorem(1)
+],
+publishedDate: utilService.getRandomIntInclusive(1950, 2024),
+description: utilService.makeLorem(20),
+pageCount: utilService.getRandomIntInclusive(20, 600),
+categories: [ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)]],
+thumbnail: `http://coding-academy.org/books-photos/${i+1}.jpg`,
+language: "en",
+listPrice: {
+amount: utilService.getRandomIntInclusive(80, 500),
+currencyCode: "EUR",
+isOnSale: Math.random() > 0.7
 }
-function _createBook(title,description,thumbnail,amount,currencyCode,isOnSale){
-const book = getEmptyBook(title,description,thumbnail,amount,currencyCode,isOnSale)
-    book.id = utilService.makeId()
-    return book
+}
+books.push(book)
+}
+utilService.saveToStorage(BOOK_KEY,books)
 }
