@@ -1,4 +1,4 @@
-export function BookDetails({book}){
+export function BookDetails({book,onBack}){
 return(
     <section>
  <h1>{book.title}</h1>
@@ -14,6 +14,7 @@ return(
  isOnSale: {book.listPrice.isOnSale}
 
  </p>
+ <button onClick={onBack}>Back</button>
  </section>   
 )
 }

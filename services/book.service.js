@@ -11,8 +11,16 @@ export const bookService = {
     save
 }
 
-function query() {
+function query(filterBy) {
     return storageService.query(BOOK_KEY)
+    .then(books =>{
+        books = books.filter(book=> book.listPrice.amount >= filterBy.price)
+        if(filterBy.name){
+         const regex = new RegExp(filterBy.name, 'i')
+         books = books.filter(book => regex.test(book.title))   
+        }
+       return books 
+    })
 }
 
 function get(bookId) {
