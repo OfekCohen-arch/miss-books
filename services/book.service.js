@@ -58,7 +58,7 @@ language: "en",
 listPrice: {
 amount: utilService.getRandomIntInclusive(80, 500),
 currencyCode: "EUR",
-isOnSale: Math.random() > 0.7
+isOnSale: true
 }
 }
 books.push(book)

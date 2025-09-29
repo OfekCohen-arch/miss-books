@@ -9,6 +9,10 @@ body {
   margin: 0;
   color: var(--gray3);
 }
+main{
+  display: grid;
+  justify-content: center;
+}
 
 h1,
 h2,
