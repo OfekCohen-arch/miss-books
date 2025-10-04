@@ -1,4 +1,3 @@
-import { utilService } from "../services/util.service"
 
 export function BookDetails({book,onBack}){
    function getPageCountText(){

@@ -2,7 +2,6 @@ import { utilService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
 const BOOK_KEY = 'bookDB'
-_createBooks()
 
 export const bookService = {
     query,
@@ -21,6 +20,7 @@ function query(filterBy) {
         }
        return books 
     })
+    .catch(_createBooks)
 }
 
 function get(bookId) {
