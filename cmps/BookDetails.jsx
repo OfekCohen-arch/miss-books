@@ -1,5 +1,11 @@
-
-export function BookDetails({book,onBack}){
+const {useState,useEffect} = React
+import { bookService } from "../services/book.service.js"
+export function BookDetails({bookId,onBack}){
+   const [book,setBook] = useState()
+   useEffect(()=>{
+    bookService.get(bookId)
+    .then(setBook)
+   },[])
    function getPageCountText(){
       if(book.pageCount>500) return 'Serious Reading'
       else if(book.pageCount>200) return 'Descent Reading'
@@ -12,6 +18,7 @@ export function BookDetails({book,onBack}){
    function getOnSaleSign(){
       if(book.listPrice.isOnSale) return 'On Sale'
    }
+   if(!book) return (<div>Loading</div>)
 return(
     <section>
       <h2>{getOnSaleSign()}</h2>

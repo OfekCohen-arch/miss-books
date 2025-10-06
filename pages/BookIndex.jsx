@@ -49,7 +49,7 @@ return (
         <BookList books={books} onSelectBook={onSelectBook} onEditBook={onEditBook}/>
     </section>
     : <section>
-        <BookDetails book={selectedBook} onBack={onBack}/>
+        <BookDetails bookId={selectedBook.id} onBack={onBack}/>
     </section>
 )   
 }
