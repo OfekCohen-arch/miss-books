@@ -7,7 +7,9 @@ export const bookService = {
     query,
     get,
     remove,
-    save
+    save,
+    addReview,
+    removeReview
 }
 
 function query(filterBy) {
@@ -58,10 +60,30 @@ language: "en",
 listPrice: {
 amount: utilService.getRandomIntInclusive(80, 500),
 currencyCode: "EUR",
-isOnSale: true
-}
+isOnSale: true,
+},
+reviews: []
 }
 books.push(book)
 }
 utilService.saveToStorage(BOOK_KEY,books)
+}
+function addReview(bookId,review){
+get(bookId)
+.then(
+   (book)=> {
+    const newBook = {...book,reviews:[...book.reviews,review]}
+    save(newBook)
+   } 
+)
+}
+function removeReview(bookId,removedReview){
+    get(bookId)
+    .then(
+        (book)=>{
+         const reviews = book.reviews.filter(review=>(review.id!==removedReview.id))  
+         const newBook = {...book,reviews:[...reviews]}
+         save(newBook)
+        }
+    )
 }

@@ -1,10 +1,16 @@
 const {useState,useEffect} = React
 import { bookService } from "../services/book.service.js"
+import { AddReview } from "./AddReview.jsx"
+import { ReviewPreview } from "./ReviewPreview.jsx"
 export function BookDetails({bookId,onBack}){
    const [book,setBook] = useState()
+   const [reviews,setReviews] = useState()
    useEffect(()=>{
     bookService.get(bookId)
-    .then(setBook)
+    .then(book=>{
+      setBook(book)
+      setReviews(book.reviews)
+    })
    },[])
    function getPageCountText(){
       if(book.pageCount>500) return 'Serious Reading'
@@ -18,9 +24,18 @@ export function BookDetails({bookId,onBack}){
    function getOnSaleSign(){
       if(book.listPrice.isOnSale) return 'On Sale'
    }
+   function onAddReview(ev,review,bookId) {
+        ev.preventDefault()
+    bookService.addReview(bookId,review)
+    setReviews([...reviews,review])
+    }
+    function onRemoveReview(removedReview){
+    bookService.removeReview(bookId,removedReview)
+    setReviews(reviews.filter(review=>(review.id!==removedReview.id)))
+    }
    if(!book) return (<div>Loading</div>)
 return(
-    <section>
+    <section className='container'>
       <h2>{getOnSaleSign()}</h2>
  <h1>{book.title}</h1>
  <p>{book.description}</p>
@@ -37,6 +52,14 @@ return(
  <p>
  </p>
  <span>{getPageCountText()}</span>
+ <AddReview bookId={bookId} onAddReview={onAddReview}/>
+ <div>
+   <h2>Reviews</h2>
+ {reviews.map(
+   review=>
+      <ReviewPreview review={review} onRemoveReview={onRemoveReview}/>
+ )}
+ </div>
  <button onClick={onBack}>Back</button>
  </section>   
 )
