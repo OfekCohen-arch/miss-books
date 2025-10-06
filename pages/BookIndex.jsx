@@ -3,6 +3,7 @@ import { bookService } from "../services/book.service.js"
 import { BookDetails } from "../cmps/BookDetails.jsx"
 import { BookFilter } from "../cmps/BookFilter.jsx"
 import { BookEdit } from "../cmps/BookEdit.jsx"
+import { AddBook } from "../cmps/AddBook.jsx"
 
 const {useState,useEffect} = React
 
@@ -35,6 +36,11 @@ function onBack(){
 function onSetFilterBy(name,price){
 setFilterBy({name: name,price:price})
 }
+function onAddBook(item){
+bookService.addGoogleBook(item)
+.then(book=>setBooks([...books,book])
+)
+}
 if(!books) return(<div>Loading Books</div>)
 else if(editedBook) return (
     <section>
@@ -44,6 +50,7 @@ else if(editedBook) return (
 return (
      (!selectedBook)?
     <section>
+        <AddBook onAddBook={onAddBook}/>
         <BookFilter onSetFilterBy={onSetFilterBy}/>
         <BookList books={books} onSelectBook={onSelectBook} onEditBook={onEditBook}/>
     </section>

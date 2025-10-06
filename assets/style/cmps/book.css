@@ -1,0 +1,22 @@
+.book{
+    width: 250px;
+    height: 20px;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    
+}
+.resaults-container{
+   gap: 2px; 
+}
+.resaults-container li{
+    width: max-content;
+    display: flex;
+    align-items: center;
+}
+.book button{
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    background-color: transparent;
+}

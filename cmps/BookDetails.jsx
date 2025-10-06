@@ -55,7 +55,9 @@ return(
  <AddReview bookId={bookId} onAddReview={onAddReview}/>
  <div>
    <h2>Reviews</h2>
- {reviews.map(
+ {(reviews.length===0)?<div>There are not reviews yet</div>
+ :
+ reviews.map(
    review=>
       <ReviewPreview review={review} onRemoveReview={onRemoveReview}/>
  )}

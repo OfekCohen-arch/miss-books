@@ -3,6 +3,13 @@
     height: 200px;
     width: 200px;
     text-align: center;
+    position: relative;
+}
+.buttons-container{
+    display: flex;
+    position: absolute;
+    bottom: 5px;
+    left: 20px;
 }
 .card img{
     width: 100px;

@@ -47,3 +47,7 @@ object {
 .debug * {
   outline: 1px solid gold
 }
+button{
+  display: flex;
+  align-items: center;
+}

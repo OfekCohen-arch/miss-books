@@ -9,7 +9,8 @@ export const bookService = {
     remove,
     save,
     addReview,
-    removeReview
+    removeReview,
+    addGoogleBook
 }
 
 function query(filterBy) {
@@ -86,4 +87,32 @@ function removeReview(bookId,removedReview){
          save(newBook)
         }
     )
+}
+function addGoogleBook(book){
+    console.log(book.id);
+    
+const newBook = {
+ id: book.id,
+ title: book.volumeInfo.title || 'No title',
+  subtitle: book.volumeInfo.subtitle || '',
+  authors: book.volumeInfo.authors || [],
+  publishedDate: book.volumeInfo.publishedDate || 'Unknown',
+  description: book.volumeInfo.description || '',
+  pageCount: book.volumeInfo.pageCount || 0,
+  categories: book.volumeInfo.categories || [],
+  thumbnail: book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.thumbnail
+  ? book.volumeInfo.imageLinks.thumbnail
+  : '',
+  language: book.volumeInfo.language || 'en',
+  listPrice: {
+    amount: utilService.getRandomIntInclusive(20,400),
+    currencyCode: book.saleInfo.currencyCode || 'USD',
+    isOnSale: true   
+},
+reviews:[]
+}
+ 
+return storageService.post(BOOK_KEY, newBook).then(
+    book=>{return book }
+ )
 }
